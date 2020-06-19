@@ -2,12 +2,16 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const session = require("express-session");
-const passport = require('passport');
-const route = require("./routes/route");
+const passport = require("passport");
+const cookieParser = require("cookie-parser")
+
+const authRoute = require("./routes/auth");
+const userRoute = require("./routes/user");
 
 const app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser())
 
 app.use(session({
     secret: 'learn env',
@@ -27,7 +31,8 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use("/api", route);
+app.use("/api", authRoute);
+app.use("/api", userRoute);
 
 app.listen(3000, function()
 {
