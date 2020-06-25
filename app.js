@@ -7,6 +7,8 @@ const cookieParser = require("cookie-parser")
 
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
+const prodRoute = require("./routes/product");
+const catRoute = require("./routes/category");
 
 const app = express();
 
@@ -33,6 +35,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use("/api", authRoute);
 app.use("/api", userRoute);
+app.use("/api", prodRoute);
+app.use("/api", catRoute);
 
 app.listen(3000, function()
 {
